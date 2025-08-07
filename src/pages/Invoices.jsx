@@ -9,7 +9,11 @@ import {
   XCircle,
   DollarSign,
   Calendar,
+  X,
+  Eye,
+  Trash2,
   AlertCircle,
+  ChevronDown,
 } from 'lucide-react';
 
 // Laravel API services - update this URL to match your Laravel backend
