@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { Users, BarChart3, Settings, TrendingUp, FileText } from 'lucide-react';
+import { Users, BarChart3, Settings, FileText } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
 const Sidebar = () => {

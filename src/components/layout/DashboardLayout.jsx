@@ -1,8 +1,4 @@
 import React from 'react';
-import { Menu, Transition } from '@headlessui/react';
-import { Fragment } from 'react';
-import { data, Link } from 'react-router-dom';
-import Sidebar from './Sidebar';
 
 const DashboardLayout = () => {
   return (

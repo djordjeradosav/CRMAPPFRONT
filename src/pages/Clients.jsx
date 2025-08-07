@@ -10,8 +10,6 @@ import {
   ArrowUpDown,
   X,
   Building,
-  Mail,
-  Phone,
   User,
 } from 'lucide-react';
 import { clientService } from '../components/services/clientService';
