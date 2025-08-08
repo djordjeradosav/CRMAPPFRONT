@@ -32,6 +32,7 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+1;
 
 export const authAPI = {
   register: async (userData) => {
