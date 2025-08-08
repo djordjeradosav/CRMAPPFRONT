@@ -1,7 +1,10 @@
 // api.js
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8000/api'; // Adjust to your Laravel backend URL
+// Use environment variable or fallback to production URL
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL ||
+  'https://crmappback-production.up.railway.app/api';
 
 // Create axios instance with default config
 const api = axios.create({
