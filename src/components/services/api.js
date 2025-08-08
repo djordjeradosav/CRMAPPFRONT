@@ -3,8 +3,7 @@ import axios from 'axios';
 
 // Use React environment variable (not Vite)
 const API_BASE_URL =
-  process.env.REACT_APP_API_URL ||
-  'https://crmappback-production.up.railway.app/api';
+  process.env.REACT_APP_API_URL || 'https://centerbeam.proxy.rlwy.net/api';
 
 console.log('API Base URL:', API_BASE_URL); // For debugging
 
