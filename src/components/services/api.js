@@ -1,7 +1,7 @@
 // api.js
 import axios from 'axios';
 
-const API_BASE_URL = 'https://crmappback-production.up.railway.app/api'; // Adjust to your Laravel backend URL
+const API_BASE_URL = 'http://localhost:8000/api'; // Adjust to your Laravel backend URL
 
 // Create axios instance with default config
 const api = axios.create({
@@ -32,7 +32,6 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-1;
 
 export const authAPI = {
   register: async (userData) => {
