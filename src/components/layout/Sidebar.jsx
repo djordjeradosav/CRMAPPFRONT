@@ -1,10 +1,9 @@
 import React from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Users, BarChart3, Settings, FileText } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
 const Sidebar = () => {
-  const location = useLocation();
   const { user, canAccess, isUser } = useAuth();
 
   const menuItems = [

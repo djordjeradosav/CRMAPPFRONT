@@ -369,10 +369,7 @@ const AuthPages = () => {
           {/* Footer */}
           {currentPage === 'login' && (
             <div className="mt-6 text-center">
-              <a
-                href="#"
-                className="text-sm text-blue-600 hover:text-blue-700 font-medium"
-              >
+              <a className="text-sm text-blue-600 hover:text-blue-700 font-medium">
                 Forgot your password?
               </a>
             </div>
