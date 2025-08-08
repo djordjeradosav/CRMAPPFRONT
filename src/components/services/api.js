@@ -4,7 +4,7 @@ import axios from 'axios';
 // Use environment variable or fallback to production URL
 const API_BASE_URL =
   import.meta.env.VITE_API_URL ||
-  'https://crmappback-production.up.railway.app/api';
+  'https://crmappback-production-9545.up.railway.app/api';
 
 // Create axios instance with default config
 const api = axios.create({
