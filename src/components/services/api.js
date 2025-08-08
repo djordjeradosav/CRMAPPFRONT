@@ -16,7 +16,8 @@ const api = axios.create({
     Accept: 'application/json',
   },
   // Add timeout to prevent hanging requests
-  timeout: 10000,
+  timeout: 30000, // Increased timeout for Railway
+  withCredentials: false, // Set to false for Railway CORS
 });
 
 // Add token to requests
@@ -27,6 +28,7 @@ api.interceptors.request.use(
       config.headers.Authorization = `Bearer ${token}`;
     }
     console.log('Making request to:', config.baseURL + config.url); // For debugging
+    console.log('Request headers:', config.headers); // For debugging
     return config;
   },
   (error) => {
@@ -38,11 +40,15 @@ api.interceptors.request.use(
 // Handle token expiration and errors
 api.interceptors.response.use(
   (response) => {
-    console.log('Response received:', response.status); // For debugging
+    console.log('Response received:', response.status, response.data); // Enhanced debugging
     return response;
   },
   (error) => {
-    console.error('API Error:', error.response || error.message); // For debugging
+    console.error('API Error Details:'); // Enhanced debugging
+    console.error('Status:', error.response?.status);
+    console.error('Data:', error.response?.data);
+    console.error('Headers:', error.response?.headers);
+    console.error('Config:', error.config);
 
     if (error.response?.status === 401) {
       localStorage.removeItem('auth_token');
@@ -54,82 +60,159 @@ api.interceptors.response.use(
 
 export const authAPI = {
   register: async (userData) => {
-    const response = await api.post('/register', userData);
-    return response.data;
+    try {
+      console.log('Registering user with data:', userData);
+      const response = await api.post('/register', userData);
+      return response.data;
+    } catch (error) {
+      console.error('Register error:', error);
+      throw error;
+    }
   },
 
   login: async (credentials) => {
-    const response = await api.post('/login', credentials);
-    return response.data;
+    try {
+      console.log('Logging in with credentials:', { email: credentials.email });
+      const response = await api.post('/login', credentials);
+      return response.data;
+    } catch (error) {
+      console.error('Login error:', error);
+      throw error;
+    }
   },
 
   logout: async () => {
-    const response = await api.post('/logout');
-    return response.data;
+    try {
+      const response = await api.post('/logout');
+      return response.data;
+    } catch (error) {
+      console.error('Logout error:', error);
+      throw error;
+    }
   },
 
   me: async () => {
-    const response = await api.get('/me');
-    return response.data;
+    try {
+      const response = await api.get('/me');
+      return response.data;
+    } catch (error) {
+      console.error('Me endpoint error:', error);
+      throw error;
+    }
   },
 
   resetPassword: async (passwordData) => {
-    const response = await api.post('/reset-password', passwordData);
-    return response.data;
+    try {
+      const response = await api.post('/reset-password', passwordData);
+      return response.data;
+    } catch (error) {
+      console.error('Reset password error:', error);
+      throw error;
+    }
   },
 };
 
 export const clientAPI = {
   getAll: async () => {
-    const response = await api.get('/clients');
-    return response.data;
+    try {
+      const response = await api.get('/clients');
+      return response.data;
+    } catch (error) {
+      console.error('Get clients error:', error);
+      throw error;
+    }
   },
 
   getById: async (id) => {
-    const response = await api.get(`/clients/${id}`);
-    return response.data;
+    try {
+      const response = await api.get(`/clients/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error('Get client by ID error:', error);
+      throw error;
+    }
   },
 
   create: async (clientData) => {
-    const response = await api.post('/clients', clientData);
-    return response.data;
+    try {
+      const response = await api.post('/clients', clientData);
+      return response.data;
+    } catch (error) {
+      console.error('Create client error:', error);
+      throw error;
+    }
   },
 
   update: async (id, clientData) => {
-    const response = await api.put(`/clients/${id}`, clientData);
-    return response.data;
+    try {
+      const response = await api.put(`/clients/${id}`, clientData);
+      return response.data;
+    } catch (error) {
+      console.error('Update client error:', error);
+      throw error;
+    }
   },
 
   delete: async (id) => {
-    const response = await api.delete(`/clients/${id}`);
-    return response.data;
+    try {
+      const response = await api.delete(`/clients/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error('Delete client error:', error);
+      throw error;
+    }
   },
 };
 
 export const invoiceAPI = {
   getAll: async () => {
-    const response = await api.get('/invoices');
-    return response.data;
+    try {
+      const response = await api.get('/invoices');
+      return response.data;
+    } catch (error) {
+      console.error('Get invoices error:', error);
+      throw error;
+    }
   },
 
   getById: async (id) => {
-    const response = await api.get(`/invoices/${id}`);
-    return response.data;
+    try {
+      const response = await api.get(`/invoices/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error('Get invoice by ID error:', error);
+      throw error;
+    }
   },
 
   create: async (invoiceData) => {
-    const response = await api.post('/invoices', invoiceData);
-    return response.data;
+    try {
+      const response = await api.post('/invoices', invoiceData);
+      return response.data;
+    } catch (error) {
+      console.error('Create invoice error:', error);
+      throw error;
+    }
   },
 
   update: async (id, invoiceData) => {
-    const response = await api.put(`/invoices/${id}`, invoiceData);
-    return response.data;
+    try {
+      const response = await api.put(`/invoices/${id}`, invoiceData);
+      return response.data;
+    } catch (error) {
+      console.error('Update invoice error:', error);
+      throw error;
+    }
   },
 
   delete: async (id) => {
-    const response = await api.delete(`/invoices/${id}`);
-    return response.data;
+    try {
+      const response = await api.delete(`/invoices/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error('Delete invoice error:', error);
+      throw error;
+    }
   },
 };
 
