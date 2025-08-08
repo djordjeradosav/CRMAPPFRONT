@@ -1,10 +1,12 @@
 // api.js
 import axios from 'axios';
 
-// Use environment variable or fallback to production URL
+// Use React environment variable (not Vite)
 const API_BASE_URL =
-  import.meta.env.VITE_API_URL ||
-  'https://crmappback-production-9545.up.railway.app/api';
+  process.env.REACT_APP_API_URL ||
+  'https://crmappback-production.up.railway.app/api';
+
+console.log('API Base URL:', API_BASE_URL); // For debugging
 
 // Create axios instance with default config
 const api = axios.create({
@@ -13,21 +15,35 @@ const api = axios.create({
     'Content-Type': 'application/json',
     Accept: 'application/json',
   },
+  // Add timeout to prevent hanging requests
+  timeout: 10000,
 });
 
 // Add token to requests
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('auth_token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
-
-// Handle token expiration
-api.interceptors.response.use(
-  (response) => response,
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('auth_token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    console.log('Making request to:', config.baseURL + config.url); // For debugging
+    return config;
+  },
   (error) => {
+    console.error('Request interceptor error:', error);
+    return Promise.reject(error);
+  }
+);
+
+// Handle token expiration and errors
+api.interceptors.response.use(
+  (response) => {
+    console.log('Response received:', response.status); // For debugging
+    return response;
+  },
+  (error) => {
+    console.error('API Error:', error.response || error.message); // For debugging
+
     if (error.response?.status === 401) {
       localStorage.removeItem('auth_token');
       window.location.href = '/login';
